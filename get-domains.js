@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name		 Get Domains
-// @namespace	 *
+// @name        Get Domains
+// @namespace   *
 // @description Get Domains
-// @include		 *
-// @version	1.0
-// @grant		none
+// @include     *
+// @version     1.0
+// @grant       none
 // ==/UserScript==
 
 window.addEventListener

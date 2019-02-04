@@ -105,14 +105,16 @@ function getDomains ()
 	aDomains.forEach (function (i) {i && alert (i)})
 }
 
-function unique (arr)
+function uniqueDomains (arr)
 {
 	var obj = {}
 	
 	for (var i = 0; i < arr.length; i++)
 	{
-		var str = arr [i].toLowerCase ()
-		obj [str] = true
+		var parts = arr [i].toLowerCase ().split ('.')
+		
+		for (var j = 0; j <= parts.length - 2; j++)
+			obj [parts.slice (j).join ('.')] = true
 	}
 	
 	return Object.keys (obj)

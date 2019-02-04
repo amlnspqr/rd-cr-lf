@@ -100,7 +100,7 @@ function getDomains ()
 	
 	var rDomains = new RegExp ('([\\w-]+\\.)+' + sDomain.replace (/\./g, '\\.'), 'g')
 	
-	var aDomains = unique (document.body.innerHTML.match (rDomains).map (function (i) {return i.replace (/^www\./, '')})).join ('\n').split (/([\s\S]{10000})/)
+	var aDomains = uniqueDomains (document.body.innerHTML.match (rDomains)).join ('\n').split (/([\s\S]{10000})/)
 	
 	aDomains.forEach (function (i) {i && alert (i)})
 }
@@ -111,7 +111,7 @@ function uniqueDomains (arr)
 	
 	for (var i = 0; i < arr.length; i++)
 	{
-		var parts = arr [i].toLowerCase ().split ('.')
+		var parts = arr [i].toLowerCase ().replace (/^www\./, '').split ('.')
 		
 		for (var j = 0; j <= parts.length - 2; j++)
 			obj [parts.slice (j).join ('.')] = true

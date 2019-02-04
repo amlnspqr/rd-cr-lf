@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>RD/CR/LF</title>
+		
+		<style>
+			textarea
+			{
+				width: 50%;
+				height: 200px;
+			}
+		</style>
+		
+		<script>
+		
+			var paths = ["foo", "foo%0Abar", "foo%0Dbar", "foo%0D%0Abar", "foo%0Bbar", "foo%0Cbar", "foo%09bar", "foo%00bar", "foo%C2%85bar", "foo%E5%98%8Abar", "foo%E2%80%A8bar", "foo%E2%80%A9bar", "foo%E2%86%A1bar"]
+			
+			function UniqueDomains ()
+			{
+				var aDomains = document.getElementsByName ("domains") [0].value.trim ().split (/[,;\n]/)
+				
+				var oDomains = {}
+				
+				for (var i = 0; i < aDomains.length; i++)
+				{
+					var sDomain = aDomains [i].toLowerCase ().replace (/^www\./, "")
+					oDomains [sDomain] = true
+				}
+				
+				document.getElementsByName ("domains") [0].value = Object.keys (oDomains).join ("\n")
+			}
+			
+			function CheckDomains ()
+			{
+				var domains = document.getElementsByName ("domains") [0].value.trim ().split (/[,;\n]/)
+				
+				for (var i = 0; i < domains.length; i++)
+				{
+					if (!domains [i])
+						continue 
+					
+					for (var j = 0; j < paths.length; j++)
+					{
+						CheckDomain (domains [i], paths [j])
+					}
+				}
+				
+				alert ("Done")
+			}
+			
+			function CheckDomain (domain, path)
+			{
+				var results = document.getElementById ("results")
+				
+				var req = new XMLHttpRequest ()
+				
+				req.open ("GET", "/rdcrlfapi.php?domains[]=" + domain + "&paths[]=" + path, false)
+				
+				req.send (null)
+				
+				results.innerHTML += htmlEncode (req.responseText)
+			}
+			
+			function ClearResults ()
+			{
+				document.getElementById ("results").innerHTML = ""
+			}
+			
+			function htmlEncode (str)
+			{
+				return str.replace (/</g, "&lt;").replace (/>/g, "&gt;").replace (/"/g, "&quot;").replace (/\'/g, "&#39;")
+			}
+			
+		</script>
+	</head>
+	<body>
+		<textarea name="domains"></textarea> <br />
+		<button onclick="ClearResults (); CheckDomains ()">Check</button> 
+		<button onclick="UniqueDomains ()">Unique</button> <br />
+		<pre id="results"></pre>
+	</body>
+</html>

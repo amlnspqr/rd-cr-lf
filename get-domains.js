@@ -19,7 +19,7 @@ window.addEventListener
 			
 			if (e.keyCode == 70)
 			{
-				var sDomain = prompt ('Enter domain', location.hostname)
+				var sDomain = prompt ('Enter domain', currentDomain ())
 				
 				sDomain && openScanners (sDomain)
 			}
@@ -78,7 +78,7 @@ function getDomain ()
 				}
 				catch (e)
 				{
-					var domain = prompt ('Enter domain', location.hostname)
+					var domain = prompt ('Enter domain', currentDomain ())
 				}
 			}
 		}
@@ -92,17 +92,18 @@ function getDomains ()
 	var sDomain = getDomain ()
 	
 	if (!sDomain)
-	{
-		alert ('Domain not found')
-		
 		return 0
-	}
 	
 	var rDomains = new RegExp ('([\\w-]+\\.)+' + sDomain.replace (/\./g, '\\.'), 'g')
 	
 	var aDomains = uniqueDomains (document.getElementsByTagName ('html') [0].innerHTML.match (rDomains)).join ('\n').split (/([\s\S]{10000})/)
 	
 	aDomains.forEach (function (i) {i && alert (i)})
+}
+
+function currentDomain ()
+{
+	return location.hostname.match (/[^\.]*\.[^\.]*$/) [0]
 }
 
 function uniqueDomains (arr)

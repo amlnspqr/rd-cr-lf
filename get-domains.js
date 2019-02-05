@@ -3,7 +3,7 @@
 // @namespace   *
 // @description Get Domains
 // @include     *
-// @version     1.1
+// @version     1.2
 // @grant       none
 // ==/UserScript==
 
@@ -78,7 +78,7 @@ function getDomain ()
 				}
 				catch (e)
 				{
-					var domain = ''
+					var domain = prompt ('Enter domain', location.host)
 				}
 			}
 		}
@@ -100,7 +100,7 @@ function getDomains ()
 	
 	var rDomains = new RegExp ('([\\w-]+\\.)+' + sDomain.replace (/\./g, '\\.'), 'g')
 	
-	var aDomains = uniqueDomains (document.body.innerHTML.match (rDomains)).join ('\n').split (/([\s\S]{10000})/)
+	var aDomains = uniqueDomains (document.getElementsByTagName ('html') [0].innerHTML.match (rDomains)).join ('\n').split (/([\s\S]{10000})/)
 	
 	aDomains.forEach (function (i) {i && alert (i)})
 }

@@ -3,7 +3,7 @@
 // @namespace   *
 // @description Get Domains
 // @include     *
-// @version     1.4
+// @version     2.0
 // @grant       none
 // ==/UserScript==
 
@@ -95,8 +95,31 @@ function getDomains ()
 		return 0
 	
 	var rDomains = new RegExp ('([\\w-]+\\.)+' + sDomain.replace (/\./g, '\\.'), 'g')
+	var aCSPDomains
 	
-	var aDomains = uniqueDomains (document.getElementsByTagName ('html') [0].innerHTML.match (rDomains)).join ('\n').split (/([\s\S]{10000})/)
+	if (sDomain == currentDomain ())
+	{
+		try
+		{
+			var req = new XMLHttpRequest ()
+			req.open ('GET', location.href, false)
+			req.send ()
+			
+			aCSPDomains = req.getResponseHeader ('Content-Security-Policy').match (rDomains)
+			
+			alert (aCSPDomains.join ('\n'))
+		}
+		catch (e)
+		{
+			alert (e.message)
+		}
+	}
+	
+	var aDomains = document.getElementsByTagName ('html') [0].innerHTML.match (rDomains)
+	
+	aCSPDomains && (aDomains = aDomains.concat (aCSPDomains))
+	
+	aDomains = uniqueDomains (aDomains).join ('\n').split (/([\s\S]{10000})/)
 	
 	aDomains.forEach (function (i) {i && alert (i)})
 }

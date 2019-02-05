@@ -3,7 +3,7 @@
 // @namespace   *
 // @description Get Domains
 // @include     *
-// @version     1.2
+// @version     1.3
 // @grant       none
 // ==/UserScript==
 
@@ -19,7 +19,7 @@ window.addEventListener
 			
 			if (e.keyCode == 70)
 			{
-				var sDomain = prompt ('Enter domain', location.host)
+				var sDomain = prompt ('Enter domain', location.hostname)
 				
 				sDomain && openScanners (sDomain)
 			}
@@ -78,7 +78,7 @@ function getDomain ()
 				}
 				catch (e)
 				{
-					var domain = prompt ('Enter domain', location.host)
+					var domain = prompt ('Enter domain', location.hostname)
 				}
 			}
 		}

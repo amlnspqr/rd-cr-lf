@@ -23,8 +23,10 @@
 				
 				for (var i = 0; i < aDomains.length; i++)
 				{
-					var sDomain = aDomains [i].toLowerCase ().replace (/^www\./, "")
-					oDomains [sDomain] = true
+					var aParts = aDomains [i].toLowerCase ().replace (/^www\./, "").split (".")
+					
+					for (var j = 0; j <= aParts.length - 2; j++)
+						oDomains [aParts.slice (j).join (".")] = true
 				}
 				
 				document.getElementsByName ("domains") [0].value = Object.keys (oDomains).join ("\n")

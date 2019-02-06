@@ -3,7 +3,7 @@
 // @namespace   *
 // @description Get Domains
 // @include     *
-// @version     2.0
+// @version     2.1
 // @grant       none
 // ==/UserScript==
 
@@ -94,7 +94,7 @@ function getDomains ()
 	if (!sDomain)
 		return 0
 	
-	var rDomains = new RegExp ('([\\w-]+\\.)+' + sDomain.replace (/\./g, '\\.'), 'g')
+	var rDomains = new RegExp ('[%\\\\]?([\\w-]+\\.)+' + sDomain.replace (/\./g, '\\.'), 'g')
 	var aCSPDomains
 	
 	if (sDomain == currentDomain ())
@@ -135,7 +135,7 @@ function uniqueDomains (arr)
 	
 	for (var i = 0; i < arr.length; i++)
 	{
-		var parts = arr [i].toLowerCase ().replace (/^www\./, '').split ('.')
+		var parts = arr [i].toLowerCase ().replace ('%2f', '').replace ('\\u002f', '').replace (/^www\./, '').split ('.')
 		
 		for (var j = 0; j <= parts.length - 2; j++)
 			obj [parts.slice (j).join ('.')] = true

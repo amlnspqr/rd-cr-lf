@@ -47,7 +47,7 @@ window.addEventListener
 function openScanners (sDomain)
 {
 	window.open ('https://crt.sh/?q=%.' + sDomain)
-	window.open ('https://www.virustotal.com/gui/domain/' + sDomain + '/relations/')
+	window.open ('https://www.virustotal.com/gui/domain/' + sDomain + '/relations')
 	window.open ('https://dnsdumpster.com/#' + sDomain)
 	window.open ('https://www.google.com/search?q=site:*.' + sDomain + ' -www')
 }

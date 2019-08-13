@@ -3,7 +3,7 @@
 // @namespace   *
 // @description Get Domains
 // @include     *
-// @version     2.1
+// @version     2.2
 // @grant       none
 // ==/UserScript==
 
@@ -47,7 +47,7 @@ window.addEventListener
 function openScanners (sDomain)
 {
 	window.open ('https://crt.sh/?q=%.' + sDomain)
-	window.open ('https://www.virustotal.com/en/domain/' + sDomain + '/information/')
+	window.open ('https://www.virustotal.com/gui/domain/' + sDomain + '/relations/')
 	window.open ('https://dnsdumpster.com/#' + sDomain)
 	window.open ('https://www.google.com/search?q=site:*.' + sDomain + ' -www')
 }
@@ -62,7 +62,7 @@ function getDomain ()
 	{
 		try
 		{
-			var domain = location.pathname.match (/domain\/(.+)\/information/) [1]		//	virustotal
+			var domain = location.pathname.match (/domain\/(.+)\/relations/) [1]		//	virustotal
 		}
 		catch (e)
 		{

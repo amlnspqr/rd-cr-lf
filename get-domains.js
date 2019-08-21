@@ -3,7 +3,7 @@
 // @namespace   *
 // @description Get Domains
 // @include     *
-// @version     2.2
+// @version     2.3
 // @grant       none
 // ==/UserScript==
 
@@ -52,6 +52,17 @@ function openScanners (sDomain)
 	window.open ('https://www.google.com/search?q=site:*.' + sDomain + ' -www')
 }
 
+function checkIPs ()
+{
+	var rIPs = /\d+\.\d+\.\d+\.\d+/g
+	
+	var aIPs = document.getElementsByTagName ('html') [0].innerHTML.match (rIPs)
+	
+	aIPs = privateIPs (aIPs).join ('\n').split (/([\s\S]{10000})/)
+	
+	aIPs.forEach (function (i) {i && alert (i)})
+}
+
 function getDomain ()
 {
 	try
@@ -89,6 +100,9 @@ function getDomain ()
 
 function getDomains ()
 {
+	if (location.host == 'dnsdumpster.com')
+		checkIPs ()
+	
 	var sDomain = getDomain ()
 	
 	if (!sDomain)
@@ -139,6 +153,21 @@ function uniqueDomains (arr)
 		
 		for (var j = 0; j <= parts.length - 2; j++)
 			obj [parts.slice (j).join ('.')] = true
+	}
+	
+	return Object.keys (obj)
+}
+
+function privateIPs (arr)
+{
+	var obj = {}
+	
+	for (var i = 0; i < arr.length; i++)
+	{
+		var aIP = arr [i].split ('.').map (function (i) {return +i})
+		
+		if (aIP [0] == 10 || aIP [0] == 100 && (aIP [1] >= 64 && aIP [1] <= 127) || aIP [0] == 172 && (aIP [1] >= 16 && aIP [1] <= 31) || aIP [0] == 192 && aIP [1] == 168)
+			obj [arr [i]] = true
 	}
 	
 	return Object.keys (obj)

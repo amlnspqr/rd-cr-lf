@@ -23,7 +23,7 @@
 				
 				for (var i = 0; i < aDomains.length; i++)
 				{
-					var aParts = aDomains [i].toLowerCase ().replace (/^www\./, "").split (".")
+					var aParts = aDomains [i].trim ().toLowerCase ().replace (/^www\./, "").split (".")
 					
 					for (var j = 0; j <= aParts.length - 2; j++)
 						oDomains [aParts.slice (j).join (".")] = true
